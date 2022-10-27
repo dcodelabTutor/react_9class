@@ -51,7 +51,8 @@ function News() {
             })}
 
             {
-                Members.map((member) => {
+                Members.map((member, idx) => {
+                    if (idx >= 2) return;
                     return (
                         <p key={member.name}>{member.name}</p>
                     )
