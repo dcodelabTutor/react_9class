@@ -57,8 +57,6 @@ export default function Youtube() {
 						</article>
 					);
 				})}
-
-
 			</Layout>
 
 			<Popup ref={pop}>
