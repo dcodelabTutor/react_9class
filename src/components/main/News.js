@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import { useSelector } from 'react-redux';
 
 function News() {
 
-
+    const Members = useSelector((store) => store.memberReducer.members);
 
     const getLocalData = () => {
         const dummyPosts = [
@@ -48,6 +49,14 @@ function News() {
                     </article>
                 );
             })}
+
+            {
+                Members.map((member) => {
+                    return (
+                        <p key={member.name}>{member.name}</p>
+                    )
+                })
+            }
 
 
         </main>

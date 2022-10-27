@@ -1,12 +1,9 @@
-//npm i axios
 import Layout from "../common/Layout";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useSelector } from 'react-redux';
 
 export default function Department() {
     const path = process.env.PUBLIC_URL;
-    const [Members, setMembers] = useState([]);
-
+    const Members = useSelector((store) => store.memberReducer.members)
 
     /*
     useEffect(() => {
@@ -15,9 +12,9 @@ export default function Department() {
         })
     }, []);
     */
-
     return (
         <Layout name={'Department'}>
+
             {Members.map((data, index) => {
                 return (
                     <article key={index}>
@@ -31,6 +28,7 @@ export default function Department() {
                     </article>
                 );
             })}
+
 
 
         </Layout>
