@@ -1,14 +1,15 @@
 import { Route, Switch } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setYoutube } from './redux/action';
+import axios from 'axios';
 
 //common
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 
-
-
 //main
 import Main from './components/main/Main';
-
 
 //sub
 import Community from './components/sub/Community';
@@ -20,6 +21,24 @@ import Youtube from './components/sub/Youtube';
 
 import './scss/style.scss';
 function App() {
+	const dispatch = useDispatch();
+
+	const getYoutube = () => {
+		const key = 'AIzaSyAKqZ1Dx9awi1lCS84qziASeQYZJqLxLSM';
+		const playlist = "PLtt429gshWMp4G-VhNTFhBzBTd7GOEz-G";
+		const num = 6;
+		const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&key=${key}&playlistId=${playlist}&maxResults=${num}`;
+
+		axios.get(url).then((json) => {
+			const action = setYoutube(json.data.items);
+			dispatch(action);
+		})
+	}
+
+	useEffect(() => {
+		getYoutube();
+	}, []);
+
 	return (
 		<>
 			{/* Switch는 같은 경로의 라우터 연결시 구체적인 라우터 하나만 적용한다 */}
