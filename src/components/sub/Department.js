@@ -1,27 +1,13 @@
 import Layout from "../common/Layout";
-import { useSelector, useDispatch } from 'react-redux';
-import { setMembers } from '../../redux/action';
+import { useSelector } from 'react-redux';
 
 export default function Department() {
     const path = process.env.PUBLIC_URL;
-    //useDispatch로 부터 리듀서에 액션객체를 전달해주는 함수 활성화
-    const dispatch = useDispatch();
     const Members = useSelector((store) => store.memberReducer.members)
 
-    /*
-    useEffect(() => {
-        axios.get(`${path}/DB/members.json`).then((json) => {
-            setMembers(json.data.members);
-        })
-    }, []);
-    */
+
     return (
         <Layout name={'Department'}>
-            <button onClick={() => {
-                const newMembers = [...Members];
-                newMembers[0].name = 'Emma';
-                dispatch(setMembers(newMembers));
-            }}>멤버수정</button><br />
 
             {Members.map((data, index) => {
                 return (

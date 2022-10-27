@@ -1,7 +1,7 @@
 import { Route, Switch } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setYoutube } from './redux/action';
+import { setYoutube, setMembers } from './redux/action';
 import axios from 'axios';
 
 //common
@@ -23,20 +23,25 @@ import './scss/style.scss';
 function App() {
 	const dispatch = useDispatch();
 
-	const getYoutube = () => {
+	const getYoutube = async () => {
 		const key = 'AIzaSyAKqZ1Dx9awi1lCS84qziASeQYZJqLxLSM';
 		const playlist = "PLtt429gshWMp4G-VhNTFhBzBTd7GOEz-G";
 		const num = 6;
 		const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&key=${key}&playlistId=${playlist}&maxResults=${num}`;
 
-		axios.get(url).then((json) => {
-			const action = setYoutube(json.data.items);
-			dispatch(action);
-		})
+		const result = await axios.get(url);
+		dispatch(setYoutube(result.data.items));
+	}
+
+	const getMembers = async () => {
+		const url = process.env.PUBLIC_URL + '/DB/members.json';
+		const result = await axios.get(url);
+		dispatch(setMembers(result.data.members))
 	}
 
 	useEffect(() => {
 		getYoutube();
+		getMembers();
 	}, []);
 
 	return (

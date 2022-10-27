@@ -30,8 +30,6 @@ function News() {
 
 
 
-
-
     useEffect(() => {
         localStorage.setItem('post', JSON.stringify(Posts));
     }, []);
