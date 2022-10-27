@@ -79,7 +79,7 @@
         imgDOM.forEach(img => {
           img.onload = () => {
             countImg++;
-            console.log('img loaded', countImg);
+            //console.log('img loaded', countImg);
             if (countImg === imgs.length) res(true);
           }
         })
@@ -95,7 +95,7 @@
         vidDOM.forEach(vid => {
           vid.onloadeddata = () => {
             countVid++;
-            console.log('vid loaded', countVid);
+            //console.log('vid loaded', countVid);
             if (countVid === vids.length) res(true);
           }
         })
