@@ -4,14 +4,6 @@ import Layout from '../common/Layout';
 
 function Member() {
     const history = useHistory();
-    /*
-    useHistory는 URL주소를 변경할 때 사용하는 hook이다
-    리액트 특성상, url변경없이 내부 컴포넌트 만 변경시켜 화면을 바꿔줄 수 있다. 하지만 url을 바꿔주면 현재 어느 페이지에 있는지 사용자가 대략적으로 알 수 있다. url주소 변경없이 컴포넌트의 변경만으로도 사용자가 웹페이지를 이용할 수 있지만, 복잡한 순서와 사용자 경험을 개선하기 위해 핵심 컴포넌트들이 변경될때 url을 같이 변경시켜주면 "사용자 친화적인 페이지가" 될수 있다
-
-    uswHistory는 사용하기 위해서  리액트라우터돔을 사용해야한다
-    라우터의 버전이 5인경우가 useHistory이고
-    라우터 버전이 6인경우에는 이름이 바뀌었다.  useNavigate로 변경됨
-    */
 
     const initVal = {
         userid: '',

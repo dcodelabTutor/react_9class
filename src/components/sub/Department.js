@@ -8,11 +8,13 @@ export default function Department() {
     const [Members, setMembers] = useState([]);
 
 
+    /*
     useEffect(() => {
         axios.get(`${path}/DB/members.json`).then((json) => {
             setMembers(json.data.members);
         })
     }, []);
+    */
 
     return (
         <Layout name={'Department'}>
