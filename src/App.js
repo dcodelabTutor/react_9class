@@ -23,15 +23,8 @@ import './scss/style.scss';
 function App() {
 	const dispatch = useDispatch();
 
-	const getMembers = async () => {
-		const url = process.env.PUBLIC_URL + '/DB/members.json';
-		const result = await axios.get(url);
-		dispatch(setMembers(result.data.members))
-	}
-
 	useEffect(() => {
-
-		getMembers();
+		dispatch({ type: 'MEMBERS_START' });
 		dispatch({ type: 'YOUTUBE_START' })
 		dispatch({ type: 'FLICKR_START', Opt: { type: 'user', user: '164021883@N04' } })
 	}, []);

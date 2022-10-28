@@ -23,10 +23,15 @@ export const getFlickr = async (opt) => {
 
 export const getYoutube = async () => {
   const key = 'AIzaSyCMfwz2923Ts1sPkx0J7I0mnMHPmYKw4vo';
-  const playlist = "PLtt429gshWMp4G-VhNTFhBzBTd7GOEz-G";
+  const playlist = "PLHtvRFLN5v-VD95TBpr5Dh2zguWCjjmMG";
   const num = 6;
   const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&key=${key}&playlistId=${playlist}&maxResults=${num}`;
 
+  return await axios.get(url);
+}
+
+export const getMembers = async () => {
+  const url = process.env.PUBLIC_URL + '/DB/members.json';
   return await axios.get(url);
 }
 

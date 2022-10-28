@@ -3,8 +3,7 @@ import { useSelector } from 'react-redux';
 
 export default function Department() {
     const path = process.env.PUBLIC_URL;
-    const Members = useSelector((store) => store.memberReducer.members)
-
+    const Members = useSelector((store) => store.memberReducer.members);
 
     return (
         <Layout name={'Department'}>
