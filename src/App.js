@@ -23,16 +23,6 @@ import './scss/style.scss';
 function App() {
 	const dispatch = useDispatch();
 
-	const getYoutube = async () => {
-		const key = 'AIzaSyAKqZ1Dx9awi1lCS84qziASeQYZJqLxLSM';
-		const playlist = "PLtt429gshWMp4G-VhNTFhBzBTd7GOEz-G";
-		const num = 6;
-		const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&key=${key}&playlistId=${playlist}&maxResults=${num}`;
-
-		const result = await axios.get(url);
-		dispatch(setYoutube(result.data.items));
-	}
-
 	const getMembers = async () => {
 		const url = process.env.PUBLIC_URL + '/DB/members.json';
 		const result = await axios.get(url);
@@ -40,12 +30,10 @@ function App() {
 	}
 
 	useEffect(() => {
-		getYoutube();
+
 		getMembers();
-		dispatch({
-			type: 'FLICKR_START',
-			Opt: { type: 'user', user: '164021883@N04' }
-		})
+		dispatch({ type: 'YOUTUBE_START' })
+		dispatch({ type: 'FLICKR_START', Opt: { type: 'user', user: '164021883@N04' } })
 	}, []);
 
 	return (
