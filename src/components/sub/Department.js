@@ -10,6 +10,7 @@ export default function Department() {
         <Layout name={'Department'}>
 
             {Members.map((data, index) => {
+
                 return (
                     <article key={index}>
                         <div className="inner">
