@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Navigation } from 'swiper';
+import { Pagination, Navigation, Autoplay } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
@@ -13,7 +13,7 @@ function Vids() {
 		<main id="vids" className='myScroll'>
 			{youtube.length !== 0 && (
 				<Swiper
-					modules={[Pagination, Navigation]}
+					modules={[Pagination, Navigation, Autoplay]}
 					pagination={
 						{
 							clickable: true,
@@ -24,6 +24,20 @@ function Vids() {
 					loop={true}
 					slidesPerView={'auto'}
 					centeredSlides={true}
+					autoplay={{
+						delay: 2500,
+						disableOnInteraction: true,
+					}}
+					//min-width 값을 설정해서 브라우저 폭마다 swiper 옵션설정 변경가능
+					breakpoints={{
+						320: {
+							slidesPerView: 1
+						},
+						580: {
+							slidesPerView: 'auto'
+						}
+
+					}}
 				>
 					{
 						youtube.map((vid, idx) => {

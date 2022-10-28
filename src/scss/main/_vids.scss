@@ -49,6 +49,7 @@
 		.swiper-pagination {
 			bottom: 40px;
 			filter: grayscale(1) brightness(4);
+			z-index: 5;
 
 			.swiper-pagination-bullet {
 				border-radius: 4px;
@@ -66,6 +67,7 @@
 			bottom: 30px;
 			transform: scale(0.5);
 			filter: grayscale(1) brightness(4);
+			z-index: 6;
 		}
 		.swiper-button-prev {
 			left: auto;
