@@ -33,6 +33,7 @@ function Vids() {
 										<div className="pic">
 											<img src={vid.snippet.thumbnails.standard.url} />
 										</div>
+										<h2>{vid.snippet.title}</h2>
 									</div>
 								</SwiperSlide>
 							)

@@ -1,14 +1,15 @@
 #vids {
 	width: 100%;
 	height: 100vh;
-	background: #eeffc6;
+	background: linear-gradient(45deg, violet, cornflowerblue);
 	position: relative;
-	padding: 20vh 0px;
 
 	.swiper {
 		height: 100%;
+		padding: 20vh 0px;
+
 		.swiper-slide {
-			width: 300px;
+			width: 600px;
 
 			.inner {
 				width: 100%;
@@ -21,14 +22,20 @@
 
 				.pic {
 					width: 100%;
-					height: 40%;
+					height: 300px;
 					overflow: hidden;
+					margin-bottom: 20px;
 
 					img {
 						width: 100%;
 						height: 100%;
 						object-fit: cover;
 					}
+				}
+
+				h2 {
+					font: normal 40px/1 'work sans';
+					color: #333;
 				}
 			}
 			&.swiper-slide-active {
@@ -37,6 +44,32 @@
 					transform: scale(1);
 				}
 			}
+		}
+
+		.swiper-pagination {
+			bottom: 40px;
+			filter: grayscale(1) brightness(4);
+
+			.swiper-pagination-bullet {
+				border-radius: 4px;
+				transition: 0.5s;
+			}
+
+			.swiper-pagination-bullet-active {
+				width: 80px;
+			}
+		}
+
+		.swiper-button-prev,
+		.swiper-button-next {
+			top: auto;
+			bottom: 30px;
+			transform: scale(0.5);
+			filter: grayscale(1) brightness(4);
+		}
+		.swiper-button-prev {
+			left: auto;
+			right: 60px;
 		}
 	}
 }
