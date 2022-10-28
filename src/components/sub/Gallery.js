@@ -61,7 +61,6 @@ export default function Gallery() {
 		setOpt({ type: 'user', user: e.target.innerText });
 	}
 
-	useEffect(showMine, []);
 
 	//Opt state값이 변경될떄마다 해당 구문 호출되면서
 	//dispatch로 saga에 'FLICKR_START라는 액션타입으로 Opt 정보값을 전달

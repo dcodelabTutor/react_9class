@@ -5,6 +5,9 @@
 	position: relative;
 	padding: 10vw;
 	overflow: hidden;
+	display: flex;
+	align-content: center;
+	flex-wrap: wrap;
 
 	p {
 		font: bold 200px/1 'arial';
@@ -20,5 +23,11 @@
 		top: 160px;
 		left: 100px;
 		text-shadow: 20px 20px 50px rgba(0, 0, 0, 0.4);
+	}
+	ul {
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 50px;
 	}
 }

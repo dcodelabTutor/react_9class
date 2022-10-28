@@ -42,6 +42,10 @@ function App() {
 	useEffect(() => {
 		getYoutube();
 		getMembers();
+		dispatch({
+			type: 'FLICKR_START',
+			Opt: { type: 'user', user: '164021883@N04' }
+		})
 	}, []);
 
 	return (
