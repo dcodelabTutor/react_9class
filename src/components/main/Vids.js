@@ -11,31 +11,34 @@ function Vids() {
 
 	return (
 		<main id="vids" className='myScroll'>
-			<Swiper
-				modules={[Pagination, Navigation]}
-				pagination={
-					{
-						clickable: true,
+			{youtube.length !== 0 && (
+				<Swiper
+					modules={[Pagination, Navigation]}
+					pagination={
+						{
+							clickable: true,
+						}
 					}
-				}
-				spaceBetween={60}
-				navigation={true}
-				loop={true}
-				slidesPerView={3}
-				centeredSlides={true}
-			>
-				{youtube.map((vid, idx) => {
-					return (
-						<SwiperSlide key={idx}>
-							<div className="inner">
-								<div className="pic">
-									<img src={vid.snippet.thumbnails.standard.url} />
-								</div>
-							</div>
-						</SwiperSlide>
-					)
-				})}
-			</Swiper>
+					spaceBetween={60}
+					navigation={true}
+					loop={true}
+					slidesPerView={'auto'}
+					centeredSlides={true}
+				>
+					{
+						youtube.map((vid, idx) => {
+							return (
+								<SwiperSlide key={idx}>
+									<div className="inner">
+										<div className="pic">
+											<img src={vid.snippet.thumbnails.standard.url} />
+										</div>
+									</div>
+								</SwiperSlide>
+							)
+						})}
+				</Swiper>
+			)}
 		</main>
 	);
 }
