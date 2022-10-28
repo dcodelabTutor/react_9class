@@ -3,8 +3,13 @@ import { getFlickr, getYoutube, getMembers } from './api';
 
 //flickr 비동기 처리 함수
 function* returnFlickr(action) {
-  const response = yield call(getFlickr, action.Opt);
-  yield put({ type: 'FLICKR_SUCCESS', payload: response.data.photos.photo });
+  try {
+    const response = yield call(getFlickr, action.Opt);
+    yield put({ type: 'FLICKR_SUCCESS', payload: response.data.photos.photo });
+  } catch (err) {
+    yield put({ type: 'FLICKR_FAIL', payload: err })
+  }
+
 }
 function* callFlickr() {
   yield takeLatest('FLICKR_START', returnFlickr);
@@ -12,9 +17,13 @@ function* callFlickr() {
 
 //youtube 비동기 처리 함수
 function* returnYoutube() {
-  const response = yield call(getYoutube);
-  console.log(response);
-  yield put({ type: 'YOUTUBE_SUCCESS', payload: response.data.items });
+  try {
+    const response = yield call(getYoutube);
+    yield put({ type: 'YOUTUBE_SUCCESS', payload: response.data.items });
+  } catch (err) {
+    yield put({ type: 'YOUTUBE_FAIL', payload: err });
+  }
+
 }
 function* callYoutube() {
   yield takeLatest('YOUTUBE_START', returnYoutube);
@@ -23,8 +32,13 @@ function* callYoutube() {
 
 //members 비동기 처리 함수
 function* returnMembers() {
-  const response = yield call(getMembers);
-  yield put({ type: 'MEMBERS_SUCCESS', payload: response.data.members });
+  try {
+    const response = yield call(getMembers);
+    yield put({ type: 'MEMBERS_SUCCESS', payload: response.data.members });
+  } catch (err) {
+    yield put({ type: 'MEMBERS_FAIL', payload: err });
+  }
+
 }
 function* callMembers() {
   yield takeLatest('MEMBERS_START', returnMembers);
