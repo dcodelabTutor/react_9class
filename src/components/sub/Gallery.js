@@ -1,12 +1,17 @@
 import Layout from "../common/Layout";
 import Popup from "../common/Popup";
-import axios from "axios";
 import { useState, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 import Masonry from 'react-masonry-component';
 
 export default function Gallery() {
+	//FLICKR_START타입의 액션전달할 dispatch함수 활성화
+	const dispatch = useDispatch();
+	//store 부터 전역 flickr데이터를 가져옴
+	const Items = useSelector(store => store.flickrReducer.flickr);
 	const masonryOptions = { transitionDuration: '0.5s' };
-	const [Items, setItems] = useState([]);
+	//액션객체에 담아서 saga에 전달한 Opt값을 state로 생성
+	const [Opt, setOpt] = useState({ type: 'user', user: '164021883@N04' });
 	const [Loading, setLoading] = useState(true);
 	const [EnableClick, setEnableClick] = useState(true);
 	const [Index, setIndex] = useState(0);
@@ -25,7 +30,8 @@ export default function Gallery() {
 		setEnableClick(false);
 		setLoading(true);
 		frame.current.classList.remove('on');
-		getFlickr({ type: 'search', tags: result, });
+		//axios함수에 적용될 Opt state값을 변경
+		setOpt({ type: 'search', tags: result, });
 	};
 
 	const showInterest = () => {
@@ -33,7 +39,8 @@ export default function Gallery() {
 		setEnableClick(false);
 		setLoading(true);
 		frame.current.classList.remove('on');
-		getFlickr({ type: 'interest' });
+		//axios함수에 적용될 Opt state값을 변경
+		setOpt({ type: 'interest' });
 	}
 
 	const showMine = () => {
@@ -41,7 +48,8 @@ export default function Gallery() {
 		setEnableClick(false);
 		setLoading(true);
 		frame.current.classList.remove('on');
-		getFlickr({ type: 'user', user: '164021883@N04' });
+		//axios함수에 적용될 Opt state값을 변경
+		setOpt({ type: 'user', user: '164021883@N04' });
 	}
 
 	const showUser = (e) => {
@@ -49,10 +57,29 @@ export default function Gallery() {
 		setEnableClick(false);
 		setLoading(true);
 		frame.current.classList.remove('on');
-		getFlickr({ type: 'user', user: e.target.innerText });
+		//axios함수에 적용될 Opt state값을 변경
+		setOpt({ type: 'user', user: e.target.innerText });
 	}
 
 	useEffect(showMine, []);
+
+	//Opt state값이 변경될떄마다 해당 구문 호출되면서
+	//dispatch로 saga에 'FLICKR_START라는 액션타입으로 Opt 정보값을 전달
+	useEffect(() => {
+		dispatch({ type: 'FLICKR_START', Opt })
+	}, [Opt])
+
+
+	//store로부터 최종 데이터가 전달이 되면
+	//컨텐츠 보이도록 처리
+	useEffect(() => {
+		setTimeout(() => {
+			frame.current.classList.add('on');
+			setLoading(false);
+			setEnableClick(true);
+		}, 500);
+
+	}, [Items])
 
 
 	return (
