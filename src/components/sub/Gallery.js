@@ -3,6 +3,7 @@ import Popup from "../common/Popup";
 import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import Masonry from 'react-masonry-component';
+import * as types from '../../redux/actionType';
 
 export default function Gallery() {
 	//FLICKR_START타입의 액션전달할 dispatch함수 활성화
@@ -65,7 +66,7 @@ export default function Gallery() {
 	//Opt state값이 변경될떄마다 해당 구문 호출되면서
 	//dispatch로 saga에 'FLICKR_START라는 액션타입으로 Opt 정보값을 전달
 	useEffect(() => {
-		dispatch({ type: 'FLICKR_START', Opt })
+		dispatch({ type: types.FLICKR.start, Opt })
 	}, [Opt])
 
 
