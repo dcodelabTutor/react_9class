@@ -9,6 +9,7 @@ import { useRef, useState } from 'react';
 
 function Vids() {
 	const pop = useRef(null);
+	const sw = useRef(null);
 	const [Index, setIndex] = useState(0);
 	const { youtube } = useSelector((store) => store.youtubeReducer);
 	console.log(youtube)
@@ -18,6 +19,7 @@ function Vids() {
 			<main id="vids" className='myScroll'>
 				{youtube.length !== 0 && (
 					<Swiper
+						ref={sw}
 						modules={[Pagination, Navigation, Autoplay]}
 						pagination={
 							{
@@ -52,6 +54,7 @@ function Vids() {
 											<div className="pic" onClick={() => {
 												pop.current.open();
 												setIndex(idx);
+												sw.current.swiper.autoplay.stop();
 											}}>
 												<img src={vid.snippet.thumbnails.standard.url} />
 											</div>
