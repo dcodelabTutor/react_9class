@@ -67,14 +67,18 @@ export default function Gallery() {
 
 
 	useEffect(() => {
-		//ShowSearch함수하 한번 이상 호출되었고 그와 동시에 store로 부터 받은 결과값이 없으면
-		//검색 요청은 했으나 해당 결과값이 없으므로 검색결과 없은 경고창 호출
-		if (SearchDone.current && Items.length === 0) alert('검색 결과가 없습니다.');
-		setTimeout(() => {
-			frame.current.classList.add('on');
-			setLoading(false);
-			setEnableClick(true);
-		}, 500);
+		//ShowSearch함수가 한번 이상 호출되었고 그와 동시에 store로 부터 받은 결과값이 없으면
+		//검색 요청은 했으나 해당 결과값이 없으므로 검색결과 없음 경고창 호출
+		if (SearchDone.current && Items.length === 0) {
+			alert('검색 결과가 없습니다.');
+			dispatch({ type: types.FLICKR.start, Opt: { type: 'user', user: '164021883@N04' } })
+		} else {
+			setTimeout(() => {
+				frame.current.classList.add('on');
+				setLoading(false);
+				setEnableClick(true);
+			}, 500);
+		}
 
 	}, [Items])
 
