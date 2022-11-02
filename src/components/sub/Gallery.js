@@ -6,12 +6,9 @@ import Masonry from 'react-masonry-component';
 import * as types from '../../redux/actionType';
 
 export default function Gallery() {
-	//FLICKR_START타입의 액션전달할 dispatch함수 활성화
 	const dispatch = useDispatch();
-	//store 부터 전역 flickr데이터를 가져옴
 	const Items = useSelector(store => store.flickrReducer.flickr);
 	const masonryOptions = { transitionDuration: '0.5s' };
-	//액션객체에 담아서 saga에 전달한 Opt값을 state로 생성
 	const [Opt, setOpt] = useState({ type: 'user', user: '164021883@N04' });
 	const [Loading, setLoading] = useState(true);
 	const [EnableClick, setEnableClick] = useState(true);
@@ -19,6 +16,8 @@ export default function Gallery() {
 	const frame = useRef(null);
 	const input = useRef(null);
 	const pop = useRef(null);
+	//useRef를 이용하여 컴포넌트가 재랜더링 되더라도 유지되는 boolean값 초기화
+	let SearchDone = useRef(false);
 
 
 	const showSearch = () => {
@@ -31,8 +30,10 @@ export default function Gallery() {
 		setEnableClick(false);
 		setLoading(true);
 		frame.current.classList.remove('on');
-		//axios함수에 적용될 Opt state값을 변경
 		setOpt({ type: 'search', tags: result, });
+		//showSearch함수가 실행되면 useRef의 참조값을 true로 변경
+		//해당 함수가 호출되었는지 아닌지를 판단하기 위함
+		SearchDone.current = true;
 	};
 
 	const showInterest = () => {
@@ -40,7 +41,6 @@ export default function Gallery() {
 		setEnableClick(false);
 		setLoading(true);
 		frame.current.classList.remove('on');
-		//axios함수에 적용될 Opt state값을 변경
 		setOpt({ type: 'interest' });
 	}
 
@@ -49,8 +49,8 @@ export default function Gallery() {
 		setEnableClick(false);
 		setLoading(true);
 		frame.current.classList.remove('on');
-		//axios함수에 적용될 Opt state값을 변경
 		setOpt({ type: 'user', user: '164021883@N04' });
+
 	}
 
 	const showUser = (e) => {
@@ -58,21 +58,18 @@ export default function Gallery() {
 		setEnableClick(false);
 		setLoading(true);
 		frame.current.classList.remove('on');
-		//axios함수에 적용될 Opt state값을 변경
 		setOpt({ type: 'user', user: e.target.innerText });
 	}
 
-
-	//Opt state값이 변경될떄마다 해당 구문 호출되면서
-	//dispatch로 saga에 'FLICKR_START라는 액션타입으로 Opt 정보값을 전달
 	useEffect(() => {
 		dispatch({ type: types.FLICKR.start, Opt })
 	}, [Opt])
 
 
-	//store로부터 최종 데이터가 전달이 되면
-	//컨텐츠 보이도록 처리
 	useEffect(() => {
+		//ShowSearch함수하 한번 이상 호출되었고 그와 동시에 store로 부터 받은 결과값이 없으면
+		//검색 요청은 했으나 해당 결과값이 없으므로 검색결과 없은 경고창 호출
+		if (SearchDone.current && Items.length === 0) alert('검색 결과가 없습니다.');
 		setTimeout(() => {
 			frame.current.classList.add('on');
 			setLoading(false);
