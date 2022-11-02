@@ -16,7 +16,7 @@ export default function Gallery() {
 	const frame = useRef(null);
 	const input = useRef(null);
 	const pop = useRef(null);
-	//useRef를 이용하여 컴포넌트가 재랜더링 되더라도 유지되는 boolean값 초기화
+	//검색유무를 확인할 값을 useRef로 저장
 	let SearchDone = useRef(false);
 
 
@@ -31,8 +31,6 @@ export default function Gallery() {
 		setLoading(true);
 		frame.current.classList.remove('on');
 		setOpt({ type: 'search', tags: result, });
-		//showSearch함수가 실행되면 useRef의 참조값을 true로 변경
-		//해당 함수가 호출되었는지 아닌지를 판단하기 위함
 		SearchDone.current = true;
 	};
 
@@ -67,19 +65,11 @@ export default function Gallery() {
 
 
 	useEffect(() => {
-		//ShowSearch함수가 한번 이상 호출되었고 그와 동시에 store로 부터 받은 결과값이 없으면
-		//검색 요청은 했으나 해당 결과값이 없으므로 검색결과 없음 경고창 호출
-		if (SearchDone.current && Items.length === 0) {
-			alert('검색 결과가 없습니다.');
-			dispatch({ type: types.FLICKR.start, Opt: { type: 'user', user: '164021883@N04' } })
-		} else {
-			setTimeout(() => {
-				frame.current.classList.add('on');
-				setLoading(false);
-				setEnableClick(true);
-			}, 500);
-		}
-
+		setTimeout(() => {
+			frame.current.classList.add('on');
+			setLoading(false);
+			setEnableClick(true);
+		}, 500);
 	}, [Items])
 
 
@@ -112,37 +102,43 @@ export default function Gallery() {
 					<Masonry elementType={'div'} options={masonryOptions}>
 
 
-						{Items.map((item, idx) => {
-							return (
-								<article key={idx}>
-									<div className="inner">
-										<div className="pic"
-											onClick={() => {
-												pop.current.open();
-												setIndex(idx);
-											}}
-										>
-											<img
-												src={`https://live.staticflickr.com/${item.server}/${item.id}_${item.secret}_m.jpg`}
-												alt={item.title} />
-										</div>
-										<h2>{item.title}</h2>
 
-										<div className="profile">
-											<img src={`http://farm${item.farm}.staticflickr.com/${item.server}/buddyicons/${item.owner}.jpg`} alt={item.owner}
-												onError={(e) => {
-													e.target.setAttribute(
-														'src',
-														'https://www.flickr.com/images/buddyicon.gif'
-													);
+						{Items.length === 0 && SearchDone.current
+							?
+							<p>검색 결과가 없습니다.</p>
+							:
+							Items.map((item, idx) => {
+								return (
+									<article key={idx}>
+										<div className="inner">
+											<div className="pic"
+												onClick={() => {
+													pop.current.open();
+													setIndex(idx);
 												}}
-											/>
-											<span onClick={showUser}>{item.owner}</span>
+											>
+												<img
+													src={`https://live.staticflickr.com/${item.server}/${item.id}_${item.secret}_m.jpg`}
+													alt={item.title} />
+											</div>
+											<h2>{item.title}</h2>
+
+											<div className="profile">
+												<img src={`http://farm${item.farm}.staticflickr.com/${item.server}/buddyicons/${item.owner}.jpg`} alt={item.owner}
+													onError={(e) => {
+														e.target.setAttribute(
+															'src',
+															'https://www.flickr.com/images/buddyicon.gif'
+														);
+													}}
+												/>
+												<span onClick={showUser}>{item.owner}</span>
+											</div>
 										</div>
-									</div>
-								</article>
-							)
-						})}
+									</article>
+								)
+							})
+						}
 					</Masonry>
 				</div>
 			</Layout>
